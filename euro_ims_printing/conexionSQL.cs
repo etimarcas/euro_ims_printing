@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Data;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace euro_ims_printing
 {
@@ -101,7 +102,7 @@ namespace euro_ims_printing
             }
         }
 
-        public DataTable select(string maquina) {
+        public async Task <DataTable> select(string maquina) {
             DataTable dt = new DataTable();
             try {
                 if (connSqlRemota.State == ConnectionState.Open)
@@ -127,7 +128,7 @@ namespace euro_ims_printing
             return dt;
         }
 
-        public void update(string consecutivo) {
+        public async Task update(string consecutivo) {
 
             try
             {
