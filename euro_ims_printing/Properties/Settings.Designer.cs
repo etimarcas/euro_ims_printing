@@ -22,5 +22,53 @@ namespace euro_ims_printing.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string maquina {
+            get {
+                return ((string)(this["maquina"]));
+            }
+            set {
+                this["maquina"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string impresora {
+            get {
+                return ((string)(this["impresora"]));
+            }
+            set {
+                this["impresora"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool auto {
+            get {
+                return ((bool)(this["auto"]));
+            }
+            set {
+                this["auto"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string formato {
+            get {
+                return ((string)(this["formato"]));
+            }
+            set {
+                this["formato"] = value;
+            }
+        }
     }
 }

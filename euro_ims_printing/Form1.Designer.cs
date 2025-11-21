@@ -160,7 +160,7 @@
             this.cmbFormato.Name = "cmbFormato";
             this.cmbFormato.Size = new System.Drawing.Size(180, 28);
             this.cmbFormato.TabIndex = 8;
-            this.cmbFormato.TextChanged += new System.EventHandler(this.comboBox1_TextChanged);
+            this.cmbFormato.TextChanged += new System.EventHandler(this.cmbFormato_TextChanged);
             // 
             // tbMaquina
             // 

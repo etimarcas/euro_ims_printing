@@ -23,30 +23,32 @@ namespace euro_ims_printing
             int screenWidth = Screen.PrimaryScreen.Bounds.Width;
             int screenHeight = Screen.PrimaryScreen.Bounds.Height;
             int formWidth = this.Width;
-            int formHeight = this.Height;
-            
+            int formHeight = this.Height;            
             this.Location = new Point(screenWidth - formWidth, screenHeight - formHeight);
-
-            sincronizar_items();
+           
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
+            //leer archivo config
+            leer_config();
+            //mostrar los item que no han sido impresos y pertenecen a esa "maquina"
+            sincronizar_items();
             //llena combobox con impresoras instaladas
-            
+
             cmbImpresora.Items.Clear();
-            PrintDocument prtdoc = new PrintDocument();
-            string defaultPrinterName = prtdoc.PrinterSettings.PrinterName;
+            //PrintDocument prtdoc = new PrintDocument();
+            //string defaultPrinterName = prtdoc.PrinterSettings.PrinterName;
 
             foreach (string printerName in PrinterSettings.InstalledPrinters)
             {
                 cmbImpresora.Items.Add(printerName);
                 
-                if (printerName == defaultPrinterName)
-                {
-                    cmbImpresora.SelectedItem = printerName;
-                }
+                //if (printerName == defaultPrinterName)
+                //{
+                //    cmbImpresora.SelectedItem = printerName;
+                //}
             }
 
         }
@@ -63,7 +65,7 @@ namespace euro_ims_printing
                 DialogResult dgr = MessageBox.Show("Deseas minimizar?", "Sabueso IMS - Print",MessageBoxButtons.YesNo);
                 if (dgr == DialogResult.Yes)
                 {
-                    //guardar
+                    guardar_config();
 
                     this.WindowState = FormWindowState.Minimized;
                     this.Visible = false;
@@ -72,7 +74,7 @@ namespace euro_ims_printing
 
                 }
                 else {
-                    //guardar
+                    guardar_config();
 
                 }
                 bandera = 0;
@@ -99,7 +101,7 @@ namespace euro_ims_printing
             bandera++;
         }
 
-        private void comboBox1_TextChanged(object sender, EventArgs e)
+        private void cmbFormato_TextChanged(object sender, EventArgs e)
         {
             bandera++;
         }
@@ -115,9 +117,27 @@ namespace euro_ims_printing
         public void sincronizar_items() {
             conexionSQL con = new conexionSQL();
             con.conectar();
-            dtgv_items.DataSource = con.select();
+            dtgv_items.DataSource = con.select(tbMaquina.Text);
             con.desconectar();
         }
 
+        public void guardar_config() {
+
+            Properties.Settings.Default.maquina = tbMaquina.Text;
+            Properties.Settings.Default.impresora = cmbImpresora.Text;
+            Properties.Settings.Default.auto = chkAutoImp.Checked;
+            Properties.Settings.Default.formato = cmbFormato.Text;
+            Properties.Settings.Default.Save();
+            Properties.Settings.Default.Reload();
+        }
+
+        public void leer_config() {
+            tbMaquina.Text = Properties.Settings.Default.maquina;
+            cmbImpresora.Text = Properties.Settings.Default.impresora;
+            chkAutoImp.Checked = Properties.Settings.Default.auto;
+            cmbFormato.Text = Properties.Settings.Default.formato;
+        }
+
+        
     }
 }
