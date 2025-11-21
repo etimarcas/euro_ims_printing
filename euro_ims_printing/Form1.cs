@@ -161,16 +161,16 @@ namespace euro_ims_printing
                     item itm = new item();
 
 
-                    itm.consecutivo = dtgv_items.Rows[i].Cells[0].Value.ToString();
-                    itm.CodArticulo = dtgv_items.Rows[i].Cells[1].Value.ToString();
-                    itm.descripcion = dtgv_items.Rows[i].Cells[2].Value.ToString();
-                    itm.precio = dtgv_items.Rows[i].Cells[3].Value.ToString();
-                    itm.barra = dtgv_items.Rows[i].Cells[4].Value.ToString();
-                    itm.pum = dtgv_items.Rows[i].Cells[5].Value.ToString();
-                    itm.Fecha = dtgv_items.Rows[i].Cells[6].Value.ToString();
-                    itm.Impreso = dtgv_items.Rows[i].Cells[7].Value.ToString();
-                    itm.num_impresiones = dtgv_items.Rows[i].Cells[8].Value.ToString();
-                    itm.NombreMaquina = dtgv_items.Rows[i].Cells[9].Value.ToString();
+                    itm.consecutivo = dtgv_items.Rows[i].Cells[1].Value.ToString();
+                    itm.CodArticulo = dtgv_items.Rows[i].Cells[2].Value.ToString();
+                    itm.descripcion = dtgv_items.Rows[i].Cells[3].Value.ToString();
+                    itm.precio = dtgv_items.Rows[i].Cells[4].Value.ToString();
+                    itm.barra = dtgv_items.Rows[i].Cells[5].Value.ToString();
+                    itm.pum = dtgv_items.Rows[i].Cells[6].Value.ToString();
+                    itm.Fecha = dtgv_items.Rows[i].Cells[7].Value.ToString();
+                    itm.Impreso = dtgv_items.Rows[i].Cells[8].Value.ToString();
+                    itm.num_impresiones = dtgv_items.Rows[i].Cells[9].Value.ToString();
+                    itm.NombreMaquina = dtgv_items.Rows[i].Cells[10].Value.ToString();
 
                     RawPrinterHelper.SendStringToPrinter(cmbImpresora.Text, archivo(itm));
 
@@ -187,16 +187,16 @@ namespace euro_ims_printing
 
                         item itm = new item();
 
-                        itm.consecutivo = dtgv_items.Rows[i].Cells[0].Value.ToString();
-                        itm.CodArticulo = dtgv_items.Rows[i].Cells[1].Value.ToString();
-                        itm.descripcion = dtgv_items.Rows[i].Cells[2].Value.ToString();
-                        itm.precio = dtgv_items.Rows[i].Cells[3].Value.ToString();
-                        itm.barra = dtgv_items.Rows[i].Cells[4].Value.ToString();
-                        itm.pum = dtgv_items.Rows[i].Cells[5].Value.ToString();
-                        itm.Fecha = dtgv_items.Rows[i].Cells[6].Value.ToString();
-                        itm.Impreso = dtgv_items.Rows[i].Cells[7].Value.ToString();
-                        itm.num_impresiones = dtgv_items.Rows[i].Cells[8].Value.ToString();
-                        itm.NombreMaquina = dtgv_items.Rows[i].Cells[9].Value.ToString();
+                        itm.consecutivo = dtgv_items.Rows[i].Cells[1].Value.ToString();
+                        itm.CodArticulo = dtgv_items.Rows[i].Cells[2].Value.ToString();
+                        itm.descripcion = dtgv_items.Rows[i].Cells[3].Value.ToString();
+                        itm.precio = dtgv_items.Rows[i].Cells[4].Value.ToString();
+                        itm.barra = dtgv_items.Rows[i].Cells[5].Value.ToString();
+                        itm.pum = dtgv_items.Rows[i].Cells[6].Value.ToString();
+                        itm.Fecha = dtgv_items.Rows[i].Cells[7].Value.ToString();
+                        itm.Impreso = dtgv_items.Rows[i].Cells[8].Value.ToString();
+                        itm.num_impresiones = dtgv_items.Rows[i].Cells[9].Value.ToString();
+                        itm.NombreMaquina = dtgv_items.Rows[i].Cells[10].Value.ToString();
 
                         RawPrinterHelper.SendStringToPrinter(cmbImpresora.Text, archivo(itm));
 
