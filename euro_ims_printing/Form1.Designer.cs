@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dtgv_items = new System.Windows.Forms.DataGridView();
             this.chkPrint = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -41,13 +39,17 @@
             this.cmbImpresora = new System.Windows.Forms.ComboBox();
             this.lbMaquina = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblFormato = new System.Windows.Forms.Label();
             this.cmbFormato = new System.Windows.Forms.ComboBox();
             this.tbMaquina = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblEtimarcas = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.pgbar = new System.Windows.Forms.ProgressBar();
+            this.picbSize = new System.Windows.Forms.PictureBox();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_items)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picbSize)).BeginInit();
             this.SuspendLayout();
             // 
             // dtgv_items
@@ -57,25 +59,9 @@
             this.dtgv_items.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgv_items.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.chkPrint});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dtgv_items.DefaultCellStyle = dataGridViewCellStyle1;
             this.dtgv_items.Location = new System.Drawing.Point(14, 208);
             this.dtgv_items.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtgv_items.Name = "dtgv_items";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgv_items.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dtgv_items.Size = new System.Drawing.Size(286, 287);
             this.dtgv_items.TabIndex = 0;
             // 
@@ -145,7 +131,7 @@
             this.cmbImpresora.Name = "cmbImpresora";
             this.cmbImpresora.Size = new System.Drawing.Size(180, 28);
             this.cmbImpresora.TabIndex = 5;
-            this.cmbImpresora.TextChanged += new System.EventHandler(this.cmbImpresora_TextChanged);
+            
             // 
             // lbMaquina
             // 
@@ -167,16 +153,16 @@
             this.notifyIcon1.Text = "Sabueso IMS-Print";
             this.notifyIcon1.Click += new System.EventHandler(this.notifyIcon1_Click);
             // 
-            // label1
+            // lblFormato
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(27, 151);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 21);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Formato:";
+            this.lblFormato.AutoSize = true;
+            this.lblFormato.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFormato.Location = new System.Drawing.Point(27, 151);
+            this.lblFormato.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFormato.Name = "lblFormato";
+            this.lblFormato.Size = new System.Drawing.Size(76, 21);
+            this.lblFormato.TabIndex = 7;
+            this.lblFormato.Text = "Formato:";
             // 
             // cmbFormato
             // 
@@ -187,7 +173,7 @@
             this.cmbFormato.Name = "cmbFormato";
             this.cmbFormato.Size = new System.Drawing.Size(180, 28);
             this.cmbFormato.TabIndex = 8;
-            this.cmbFormato.TextChanged += new System.EventHandler(this.cmbFormato_TextChanged);
+            
             // 
             // tbMaquina
             // 
@@ -196,18 +182,18 @@
             this.tbMaquina.Name = "tbMaquina";
             this.tbMaquina.Size = new System.Drawing.Size(179, 27);
             this.tbMaquina.TabIndex = 9;
-            this.tbMaquina.TextChanged += new System.EventHandler(this.tbMaquina_TextChanged);
+            
             // 
-            // label2
+            // lblEtimarcas
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(15, 582);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(157, 21);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "Etimarcas SAS 2025";
+            this.lblEtimarcas.AutoSize = true;
+            this.lblEtimarcas.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEtimarcas.Location = new System.Drawing.Point(15, 582);
+            this.lblEtimarcas.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblEtimarcas.Name = "lblEtimarcas";
+            this.lblEtimarcas.Size = new System.Drawing.Size(157, 21);
+            this.lblEtimarcas.TabIndex = 14;
+            this.lblEtimarcas.Text = "Etimarcas SAS 2025";
             // 
             // label3
             // 
@@ -222,17 +208,39 @@
             this.label3.Text = "Sabueso IMS - Print";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // pgbar
+            // 
+            this.pgbar.Location = new System.Drawing.Point(31, 334);
+            this.pgbar.Name = "pgbar";
+            this.pgbar.Size = new System.Drawing.Size(248, 23);
+            this.pgbar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.pgbar.TabIndex = 16;
+            // 
+            // picbSize
+            // 
+            this.picbSize.Image = global::euro_ims_printing.Properties.Resources.ic_launcher;
+            this.picbSize.InitialImage = null;
+            this.picbSize.Location = new System.Drawing.Point(265, 5);
+            this.picbSize.Name = "picbSize";
+            this.picbSize.Size = new System.Drawing.Size(35, 35);
+            this.picbSize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picbSize.TabIndex = 17;
+            this.picbSize.TabStop = false;
+            this.picbSize.Click += new System.EventHandler(this.picbSize_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(323, 657);
+            this.Controls.Add(this.picbSize);
+            this.Controls.Add(this.pgbar);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblEtimarcas);
             this.Controls.Add(this.tbMaquina);
             this.Controls.Add(this.cmbFormato);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblFormato);
             this.Controls.Add(this.lbMaquina);
             this.Controls.Add(this.cmbImpresora);
             this.Controls.Add(this.lbImpresora);
@@ -248,6 +256,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_items)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picbSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -263,13 +272,16 @@
         private System.Windows.Forms.ComboBox cmbImpresora;
         private System.Windows.Forms.Label lbMaquina;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblFormato;
         private System.Windows.Forms.ComboBox cmbFormato;
         private System.Windows.Forms.TextBox tbMaquina;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblEtimarcas;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn chkPrint;
+        private System.Windows.Forms.ProgressBar pgbar;
+        private System.Windows.Forms.PictureBox picbSize;
+        private System.Windows.Forms.Timer timer2;
     }
 }
 

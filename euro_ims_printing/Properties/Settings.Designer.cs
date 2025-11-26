@@ -70,5 +70,17 @@ namespace euro_ims_printing.Properties {
                 this["formato"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ampliado {
+            get {
+                return ((bool)(this["ampliado"]));
+            }
+            set {
+                this["ampliado"] = value;
+            }
+        }
     }
 }

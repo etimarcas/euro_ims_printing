@@ -107,7 +107,7 @@ namespace euro_ims_printing
             try {
                 if (connSqlRemota.State == ConnectionState.Open)
                 {
-                    string sql = "select * from EUR2_TAB_ArticulosNumImpresiones where Impreso=0 and NombreMaquina='"+maquina+"'";
+                    string sql = "select * from EUR2_TAB_ArticulosNumImpresiones where Impreso=0 and NombreMaquina='"+maquina+"' ";
 
                     adaptadorSqlRemota = new SqlDataAdapter(sql,connSqlRemota);
                     adaptadorSqlRemota.Fill(dt);                    
@@ -134,7 +134,7 @@ namespace euro_ims_printing
             {
                 if (connSqlRemota.State == ConnectionState.Open)
                 {
-                    string sql = "update EUR2_TAB_ArticulosNumImpresiones set Impreso=1 where Consecutivo="+consecutivo+" ";
+                    string sql = "update EUR2_TAB_ArticulosNumImpresiones set Impreso=2 where Consecutivo="+consecutivo+" ";
 
                     comandoSqlRemota = new SqlCommand(sql, connSqlRemota);
 
