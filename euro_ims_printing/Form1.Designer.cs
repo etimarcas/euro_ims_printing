@@ -46,9 +46,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pgbar = new System.Windows.Forms.ProgressBar();
+            this.picbClose = new System.Windows.Forms.PictureBox();
             this.picbSize = new System.Windows.Forms.PictureBox();
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_items)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picbClose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbSize)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,7 +132,6 @@
             this.cmbImpresora.Name = "cmbImpresora";
             this.cmbImpresora.Size = new System.Drawing.Size(180, 28);
             this.cmbImpresora.TabIndex = 5;
-            
             // 
             // lbMaquina
             // 
@@ -173,7 +173,6 @@
             this.cmbFormato.Name = "cmbFormato";
             this.cmbFormato.Size = new System.Drawing.Size(180, 28);
             this.cmbFormato.TabIndex = 8;
-            
             // 
             // tbMaquina
             // 
@@ -182,7 +181,6 @@
             this.tbMaquina.Name = "tbMaquina";
             this.tbMaquina.Size = new System.Drawing.Size(179, 27);
             this.tbMaquina.TabIndex = 9;
-            
             // 
             // lblEtimarcas
             // 
@@ -205,7 +203,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(200, 40);
             this.label3.TabIndex = 15;
-            this.label3.Text = "Sabueso IMS - Print";
+            this.label3.Text = "Sabueso Modulo IMS";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pgbar
@@ -216,11 +214,23 @@
             this.pgbar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.pgbar.TabIndex = 16;
             // 
+            // picbClose
+            // 
+            this.picbClose.Image = global::euro_ims_printing.Properties.Resources.ic_close;
+            this.picbClose.InitialImage = null;
+            this.picbClose.Location = new System.Drawing.Point(266, 5);
+            this.picbClose.Name = "picbClose";
+            this.picbClose.Size = new System.Drawing.Size(35, 35);
+            this.picbClose.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picbClose.TabIndex = 18;
+            this.picbClose.TabStop = false;
+            this.picbClose.Click += new System.EventHandler(this.picbClose_Click);
+            // 
             // picbSize
             // 
             this.picbSize.Image = global::euro_ims_printing.Properties.Resources.ic_launcher;
             this.picbSize.InitialImage = null;
-            this.picbSize.Location = new System.Drawing.Point(265, 5);
+            this.picbSize.Location = new System.Drawing.Point(225, 5);
             this.picbSize.Name = "picbSize";
             this.picbSize.Size = new System.Drawing.Size(35, 35);
             this.picbSize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -234,6 +244,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(323, 657);
+            this.Controls.Add(this.picbClose);
             this.Controls.Add(this.picbSize);
             this.Controls.Add(this.pgbar);
             this.Controls.Add(this.label3);
@@ -250,12 +261,14 @@
             this.Controls.Add(this.dtgv_items);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_items)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picbClose)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -281,7 +294,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn chkPrint;
         private System.Windows.Forms.ProgressBar pgbar;
         private System.Windows.Forms.PictureBox picbSize;
-        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.PictureBox picbClose;
     }
 }
 

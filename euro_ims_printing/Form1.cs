@@ -32,7 +32,12 @@ namespace euro_ims_printing
 
         private async void Form1_Load(object sender, EventArgs e)
         {
+            //if (Process.GetProcessesByName("Sabueso modulo IMS").Length > 1)
+            //{
+            //    prev_instances = true;
+            //    Close();
 
+            //}
             //carga la config
             leer_config();            
             //llena combobox con impresoras instaladas
@@ -58,10 +63,10 @@ namespace euro_ims_printing
         {
             if (string.IsNullOrEmpty(cmbFormato.Text) || string.IsNullOrEmpty(tbMaquina.Text) || string.IsNullOrEmpty(cmbImpresora.Text))
             {
-                MessageBox.Show("Campos obligatorios!", "Sabueso IMS - Print");
+                MessageBox.Show("Campos obligatorios!", "Sabueso Modulo IMS");
             }
             else {
-                DialogResult dgr = MessageBox.Show("Deseas minimizar?", "Sabueso IMS - Print",MessageBoxButtons.YesNo);
+                DialogResult dgr = MessageBox.Show("Deseas minimizar?", "Sabueso Modulo IMS",MessageBoxButtons.YesNo);
                 if (dgr == DialogResult.Yes)
                 {
                     guardar_config();
@@ -135,7 +140,7 @@ namespace euro_ims_printing
             cmbImpresora.Items.Clear();
             //PrintDocument prtdoc = new PrintDocument();
             //string defaultPrinterName = prtdoc.PrinterSettings.PrinterName;
-
+            try { 
             foreach (string printerName in PrinterSettings.InstalledPrinters)
             {
                 cmbImpresora.Items.Add(printerName);
@@ -145,7 +150,10 @@ namespace euro_ims_printing
                 //    cmbImpresora.SelectedItem = printerName;
                 //}
             }
-
+            }
+            catch (Exception e) {
+                MessageBox.Show("Error en [listar_impresoras]: " + e);
+            }
         }
 
         private void listar_prn() {
@@ -327,6 +335,15 @@ namespace euro_ims_printing
             }
         }
 
-        
+        private void picbClose_Click(object sender, EventArgs e)
+        {
+            DialogResult dgr = MessageBox.Show("Deseas cerrar la aplicacion?", "Sabueso Modulo IMS", MessageBoxButtons.YesNo);
+            if (dgr == DialogResult.Yes)
+            {
+                this.Close();
+               
+            }
+            
+        }
     }
 }

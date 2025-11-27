@@ -1,0 +1,9 @@
+[Sabueso-IMS]
+El modulo de impresion lee los archivo *.prn contenidos en esta carpeta, para usar su variable se debe reemplazar el campo por alguna de estas:
+$CODIGO$
+$ITEM$
+$DESCRIPCION1$ y $DESCRIPCION2$  si la descripcion se desea en dos renglones (25caracteres +25caracteres) se usan las variables en caso de ser una linea solo usar $DESCRIPCION1$
+$PRECIO$
+$CANTIDAD$
+$PPUM$
+$FECHA$

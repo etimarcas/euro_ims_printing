@@ -82,5 +82,17 @@ namespace euro_ims_printing.Properties {
                 this["ampliado"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string clave {
+            get {
+                return ((string)(this["clave"]));
+            }
+            set {
+                this["clave"] = value;
+            }
+        }
     }
 }
