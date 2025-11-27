@@ -48,12 +48,13 @@ namespace euro_ims_printing
                 if (key == clave)
                 {
 
+                ////// La aplicación ya se está ejecutando, cierra esta instancia
                 bool nuevaInstancia;
                 using (Mutex mutex = new Mutex(true, Process.GetCurrentProcess().ProcessName, out nuevaInstancia))
                 {
                     if (!nuevaInstancia)
                     {
-                        // La aplicación ya se está ejecutando, cierra esta instancia
+                        
                         return;
                     }
 

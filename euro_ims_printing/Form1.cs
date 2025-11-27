@@ -14,32 +14,29 @@ namespace euro_ims_printing
 {
     public partial class Form1 : Form
     {
-        bool ampliado = false;
+        bool ampliado;
         public Form1()
         {
             InitializeComponent();
 
-            //posicion de la app, arriba del reloj
-            this.StartPosition = FormStartPosition.Manual;
-            int screenWidth = Screen.PrimaryScreen.Bounds.Width;
-            int screenHeight = Screen.PrimaryScreen.Bounds.Height;
-            int formWidth = this.Width;
-            int formHeight = this.Height;
-            this.Size = new System.Drawing.Size(323, 657); 
-            this.Location = new Point(screenWidth - formWidth, screenHeight - formHeight);
+            ////posicion de la app, arriba del reloj
+            //this.StartPosition = FormStartPosition.Manual;
+            //int screenWidth = Screen.PrimaryScreen.Bounds.Width;
+            //int screenHeight = Screen.PrimaryScreen.Bounds.Height;
+            //int formWidth = this.Width;
+            //int formHeight = this.Height;
+            //this.Size = new System.Drawing.Size(323, 657); 
+            //this.Location = new Point(screenWidth - formWidth, screenHeight - formHeight);
            
         }
 
-        private async void Form1_Load(object sender, EventArgs e)
+        private  void Form1_Load(object sender, EventArgs e)
         {
-            //if (Process.GetProcessesByName("Sabueso modulo IMS").Length > 1)
-            //{
-            //    prev_instances = true;
-            //    Close();
-
-            //}
+            
             //carga la config
-            leer_config();            
+            leer_config();
+            //ajustar pantalla
+            ajustar_pantalla(ampliado);
             //llena combobox con impresoras instaladas
             listar_impresoras();
             //llena combobox con formatos PRN
@@ -48,7 +45,7 @@ namespace euro_ims_printing
             pgbar.Visible = true;
             sincronizar_items();
 
-            timer1.Interval = 3000;
+            timer1.Interval = 5000;
             timer1.Tick += new EventHandler(this.t_sincronizar_items);
             timer1.Enabled = true;
 
@@ -56,9 +53,7 @@ namespace euro_ims_printing
 
 
         }
-
-
-
+        
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(cmbFormato.Text) || string.IsNullOrEmpty(tbMaquina.Text) || string.IsNullOrEmpty(cmbImpresora.Text))
@@ -106,15 +101,21 @@ namespace euro_ims_printing
         }
 
         private async void sincronizar_items() {
-            conexionSQL con = new conexionSQL();
-            con.conectar();
-            dtgv_items.DataSource = await Task.Run(() => con.select(tbMaquina.Text));
-            dtgv_items.Columns[1].Visible = false; //oculta la columna del consecutivo o id
-            con.desconectar();
-            pgbar.Visible = false;
+            try { 
+                conexionSQL con = new conexionSQL();
+                con.conectar();
+                
+                dtgv_items.DataSource = await Task.Run(() => con.select(tbMaquina.Text));
+                dtgv_items.Columns[1].Visible = false; //oculta la columna del consecutivo o id
+                con.desconectar();
+                pgbar.Visible = false;
 
             if (chkAutoImp.Checked) {
                 imprimir_items_auto();
+            }
+            }
+            catch (Exception e) {
+                MessageBox.Show("Error en [sincronizar_items]: "+e.Message);
             }
         }
 
@@ -130,10 +131,16 @@ namespace euro_ims_printing
         }
 
         private void leer_config() {
+            try { 
             tbMaquina.Text = Properties.Settings.Default.maquina;
             cmbImpresora.Text = Properties.Settings.Default.impresora;
             chkAutoImp.Checked = Properties.Settings.Default.auto;
-            cmbFormato.Text = Properties.Settings.Default.formato;            
+            cmbFormato.Text = Properties.Settings.Default.formato;
+            ampliado = Properties.Settings.Default.ampliado;
+            }
+            catch (Exception e) {
+                MessageBox.Show("Error en [leer_config]: " + e.Message);
+            }
         }
 
         private void listar_impresoras() {
@@ -152,13 +159,16 @@ namespace euro_ims_printing
             }
             }
             catch (Exception e) {
-                MessageBox.Show("Error en [listar_impresoras]: " + e);
+                MessageBox.Show("Error en [listar_impresoras]: " + e.Message);
             }
         }
 
         private void listar_prn() {
+            try {
             var prnFiles = new DirectoryInfo("formatos\\").GetFiles("*.prn");
             cmbFormato.DataSource = prnFiles;
+            }
+            catch (Exception e) { MessageBox.Show("Error en [listar_prn]: " + e.Message); }
         }
 
         private void imprimir_items_auto() {
@@ -221,6 +231,7 @@ namespace euro_ims_printing
 
         private async void actualizar_items(item itm)
         {
+            try { 
             conexionSQL con = new conexionSQL();
             con.conectar();
             await con.update(itm.consecutivo);
@@ -228,6 +239,9 @@ namespace euro_ims_printing
 
 
             sincronizar_items();
+
+            }
+            catch (Exception e) { MessageBox.Show("Error en [actualizar_items]: " + e.Message); }
         }
 
         private string archivo(item itm) {
@@ -258,7 +272,7 @@ namespace euro_ims_printing
                 archivo = archivo.Replace("$PPUM$", itm.pum);                
                 archivo = archivo.Replace("$FECHA$", itm.Fecha);
             }
-            catch (Exception e) { MessageBox.Show("Error en [Archivo] " + e); }
+            catch (Exception e) { MessageBox.Show("Error en [Archivo] " + e.Message); }
 
             return archivo;
 
@@ -266,9 +280,32 @@ namespace euro_ims_printing
 
         private void picbSize_Click(object sender, EventArgs e)
         {
-            if (!ampliado)
+            if (ampliado)
             {
-                //posicion de la app, central
+                ajustar_pantalla(false);
+            }
+            else {
+                ajustar_pantalla(true);
+            }
+            
+        }
+
+        private void picbClose_Click(object sender, EventArgs e)
+        {
+            DialogResult dgr = MessageBox.Show("Deseas cerrar la aplicacion?", "Sabueso Modulo IMS", MessageBoxButtons.YesNo);
+            if (dgr == DialogResult.Yes)
+            {
+                this.Close();
+               
+            }
+            
+        }
+
+        private void ajustar_pantalla(bool ampliar) {
+            if (ampliar)
+            {
+
+                //posicion de la app, grande y central
                 this.Hide();
                 this.Location = new Point(50, 50);
                 this.Size = new System.Drawing.Size(800, 657);
@@ -283,7 +320,8 @@ namespace euro_ims_printing
                 lbImpresora.Location = new Point(492, 106);
                 lblFormato.Location = new Point(504, 151);
 
-                picbSize.Location = new Point(742, 5);
+                picbSize.Location = new Point(701, 5);
+                picbClose.Location = new Point(742, 5);
 
                 btnImprimir.Location = new Point(665, 505);
                 btnAceptar.Location = new Point(665, 566);
@@ -293,18 +331,23 @@ namespace euro_ims_printing
                 picbSize.Image = euro_ims_printing.Properties.Resources.in_launcher;
                 this.Show();
                 ampliado = true;
+
+                
+
             }
-            else { 
-                //---------------------------------------
+            else
+            {
+
+                //posicion de la app, pquena y arriba del reloj
                 this.Hide();
-                //posicion de la app, arriba del reloj
+                
                 this.StartPosition = FormStartPosition.Manual;
                 int screenWidth = Screen.PrimaryScreen.Bounds.Width;
                 int screenHeight = Screen.PrimaryScreen.Bounds.Height;
                 this.Size = new System.Drawing.Size(323, 657);
                 int formWidth = this.Width;
                 int formHeight = this.Height;
-                
+
                 this.Location = new Point(screenWidth - formWidth, screenHeight - formHeight);
 
 
@@ -318,7 +361,8 @@ namespace euro_ims_printing
                 lbImpresora.Location = new Point(15, 106);
                 lblFormato.Location = new Point(27, 151);
 
-                picbSize.Location = new Point(265, 5);
+                picbSize.Location = new Point(225, 5);
+                picbClose.Location = new Point(266, 5);
 
                 btnImprimir.Location = new Point(188, 505);
                 btnAceptar.Location = new Point(189, 566);
@@ -333,17 +377,6 @@ namespace euro_ims_printing
 
 
             }
-        }
-
-        private void picbClose_Click(object sender, EventArgs e)
-        {
-            DialogResult dgr = MessageBox.Show("Deseas cerrar la aplicacion?", "Sabueso Modulo IMS", MessageBoxButtons.YesNo);
-            if (dgr == DialogResult.Yes)
-            {
-                this.Close();
-               
-            }
-            
         }
     }
 }

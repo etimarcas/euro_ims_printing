@@ -23,7 +23,7 @@ namespace euro_ims_printing
         //Función para pasar a primer plano una ventana y activarla
         [DllImport("user32.dll")]
         public static extern bool SetForegroundWindow(IntPtr hwnd);
-        private bool prev_instances = false;
+        
 
         public activacion()
         {
@@ -92,12 +92,6 @@ namespace euro_ims_printing
 
         private void activacion_Load(object sender, EventArgs e)
         {
-            //if (Process.GetProcessesByName("Sabueso modulo IMS").Length > 1)
-            //{
-            //    prev_instances = true;
-            //    Close();
-
-            //}
         }
     }
 }

@@ -7,7 +7,8 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Data;
 using System.IO;
-using System.Threading.Tasks;
+
+
 
 namespace euro_ims_printing
 {
@@ -138,7 +139,8 @@ namespace euro_ims_printing
 
                     comandoSqlRemota = new SqlCommand(sql, connSqlRemota);
 
-                    int rowsAffected = comandoSqlRemota.ExecuteNonQuery();
+                    int rowsAffected =  comandoSqlRemota.ExecuteNonQuery();
+                    //int rowsAffected = await comandoSqlRemota.ExecuteNonQueryAsync();
                 }
 
             }
