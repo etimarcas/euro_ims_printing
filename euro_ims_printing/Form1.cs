@@ -44,6 +44,7 @@ namespace euro_ims_printing
             //mostrar los item que no han sido impresos y pertenecen a esa "maquina"
             pgbar.Visible = true;
             sincronizar_items();
+            pgbar.Visible = false;
 
             timer1.Interval = 5000;
             timer1.Tick += new EventHandler(this.t_sincronizar_items);
@@ -108,14 +109,17 @@ namespace euro_ims_printing
                 dtgv_items.DataSource = await Task.Run(() => con.select(tbMaquina.Text));
                 dtgv_items.Columns[1].Visible = false; //oculta la columna del consecutivo o id
                 con.desconectar();
-                pgbar.Visible = false;
+                
 
             if (chkAutoImp.Checked) {
                 imprimir_items_auto();
             }
             }
             catch (Exception e) {
+                if (timer1.Enabled) { timer1.Enabled = false; }
                 MessageBox.Show("Error en [sincronizar_items]: "+e.Message);
+                
+                
             }
         }
 

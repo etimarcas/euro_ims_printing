@@ -70,15 +70,15 @@ namespace euro_ims_printing
             catch (SqlException ex)
             {
 
-                Console.WriteLine($"SQL Error during NonQuery execution [conectar]: {ex.Message}");
+                Console.WriteLine($"Conexion a la base de datos ha fallado, verifique la conexion. [conectar]: {ex.Message}");
 
-                throw new ApplicationException("Database operation failed. [conectar]", ex);
+                throw new ApplicationException("Conexion a la base de datos ha fallado, verifique la conexion. [conectar]", ex);
             }
             catch (Exception ex)
             {
 
-                Console.WriteLine($"General Error during NonQuery execution: {ex.Message}");
-                throw new ApplicationException("An unexpected error occurred during database operation.", ex);
+                Console.WriteLine($"Error inesperado durante la conexion a la base de datos.: {ex.Message}");
+                throw new ApplicationException("Error inesperado durante la conexion a la base de datos.", ex);
             }
         }
 
@@ -91,15 +91,15 @@ namespace euro_ims_printing
             catch (SqlException ex)
             {
 
-                Console.WriteLine($"SQL Error during NonQuery execution: [desconectar] {ex.Message}");
+                Console.WriteLine($"Desconexion a la base de datos ha fallado: [desconectar] {ex.Message}");
                 
-                throw new ApplicationException("Database operation failed. [desconectar]", ex);
+                throw new ApplicationException("Desconexion a la base de datos ha fallado. [desconectar]", ex);
             }
             catch (Exception ex)
             {
                 
-                Console.WriteLine($"General Error during NonQuery execution: {ex.Message}");
-                throw new ApplicationException("An unexpected error occurred during database operation.", ex);
+                Console.WriteLine($"Error inesperado durante la desconexion a la base de datos.: {ex.Message}");
+                throw new ApplicationException("Error inesperado durante la desconexion a la base de datos.", ex);
             }
         }
 
@@ -116,15 +116,15 @@ namespace euro_ims_printing
                 }
                 
                 } catch (SqlException ex) {
-                Console.WriteLine($"SQL Error during NonQuery execution: [select] {ex.Message}");
+                Console.WriteLine($"Consulta a la base de datos ha fallado, verifique la consulta: [select] {ex.Message}");
 
-                throw new ApplicationException("Database operation failed. [select]", ex);
+                throw new ApplicationException("Consulta a la base de datos ha fallado, verifique la consulta. [select]", ex);
             }
             catch (Exception ex)
             {
 
-                Console.WriteLine($"General Error during NonQuery execution: {ex.Message}");
-                throw new ApplicationException("An unexpected error occurred during database operation.", ex);
+                Console.WriteLine($"Error inesperado durante la consulta: {ex.Message}");
+                throw new ApplicationException("Error inesperado durante la consulta.", ex);
             }
             return dt;
         }
@@ -146,15 +146,15 @@ namespace euro_ims_printing
             }
             catch (SqlException ex)
             {
-                Console.WriteLine($"SQL Error during NonQuery execution: [update] {ex.Message}");
+                Console.WriteLine($"Actualizacion de los datos ha fallado, verifique: [update] {ex.Message}");
 
-                throw new ApplicationException("Database operation failed. [update]", ex);
+                throw new ApplicationException("Actualizacion de los datos ha fallado, verifique: [update]", ex);
             }
             catch (Exception ex)
             {
 
-                Console.WriteLine($"General Error during NonQuery execution: {ex.Message}");
-                throw new ApplicationException("An unexpected error occurred during database operation.", ex);
+                Console.WriteLine($"Error inesperado durante la actualizacion: {ex.Message}");
+                throw new ApplicationException("Error inesperado durante la actualizacion.", ex);
             }
             
         }
