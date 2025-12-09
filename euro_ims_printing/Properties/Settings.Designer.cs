@@ -94,5 +94,29 @@ namespace euro_ims_printing.Properties {
                 this["clave"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0272")]
+        public string PID {
+            get {
+                return ((string)(this["PID"]));
+            }
+            set {
+                this["PID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1203")]
+        public string VID {
+            get {
+                return ((string)(this["VID"]));
+            }
+            set {
+                this["VID"] = value;
+            }
+        }
     }
 }

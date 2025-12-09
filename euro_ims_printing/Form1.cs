@@ -10,11 +10,16 @@ using System.Windows.Forms;
 using System.Drawing.Printing;
 using System.IO;
 
+
+using LibUsbDotNet;
+using LibUsbDotNet.Main;
+
 namespace euro_ims_printing
 {
     public partial class Form1 : Form
     {
         bool ampliado;
+        string pid,vid;
         public Form1()
         {
             InitializeComponent();
@@ -141,6 +146,8 @@ namespace euro_ims_printing
             chkAutoImp.Checked = Properties.Settings.Default.auto;
             cmbFormato.Text = Properties.Settings.Default.formato;
             ampliado = Properties.Settings.Default.ampliado;
+            pid = Properties.Settings.Default.PID;
+            vid = Properties.Settings.Default.VID;
             }
             catch (Exception e) {
                 MessageBox.Show("Error en [leer_config]: " + e.Message);
@@ -148,18 +155,13 @@ namespace euro_ims_printing
         }
 
         private void listar_impresoras() {
-            cmbImpresora.Items.Clear();
-            //PrintDocument prtdoc = new PrintDocument();
-            //string defaultPrinterName = prtdoc.PrinterSettings.PrinterName;
+            //cmbImpresora.Items.Clear();
+            
             try { 
             foreach (string printerName in PrinterSettings.InstalledPrinters)
             {
                 cmbImpresora.Items.Add(printerName);
-
-                //if (printerName == defaultPrinterName)
-                //{
-                //    cmbImpresora.SelectedItem = printerName;
-                //}
+              
             }
             }
             catch (Exception e) {
@@ -196,12 +198,33 @@ namespace euro_ims_printing
                 itm.num_impresiones = dtgv_items.Rows[i].Cells[9].Value.ToString();
                 itm.NombreMaquina = dtgv_items.Rows[i].Cells[10].Value.ToString();
 
-                RawPrinterHelper.SendStringToPrinter(cmbImpresora.Text, archivo(itm));
+                if (cmbImpresora.Text == "VID/PID")
+                {
+                    if (pid != "" && vid != "")
+                    {
+
+
+                        int VID = int.Parse(vid, System.Globalization.NumberStyles.HexNumber);
+                        int PID = int.Parse(pid, System.Globalization.NumberStyles.HexNumber);
+                        //string GUID = "36fc9e60-c465-11cf-8056-444553540000";
+
+                        PrintToZadigDevice(VID, PID, archivo(itm));
+
+                    }
+                    else { MessageBox.Show("VID y PID no pueden estar vacios, verifique archivo de configuracion"); }
+
+                }
+                else
+                {
+
+                    RawPrinterHelper.SendStringToPrinter(cmbImpresora.Text, archivo(itm));
+
+                }
 
                 actualizar_items(itm);
 
             }
-            //if (timer1.Enabled == false) { timer1.Enabled = true; }
+            
         }
 
         private void imprimir_items_manual()
@@ -223,9 +246,35 @@ namespace euro_ims_printing
                         itm.num_impresiones = dtgv_items.Rows[i].Cells[9].Value.ToString();
                         itm.NombreMaquina = dtgv_items.Rows[i].Cells[10].Value.ToString();
 
+                    //RawPrinterHelper.SendStringToPrinter(cmbImpresora.Text, archivo(itm));
+
+                    //-----------------------
+
+                    if (cmbImpresora.Text == "VID/PID")
+                    {
+                        if (pid != "" && vid != "")
+                        {
+
+
+                            int VID = int.Parse(vid, System.Globalization.NumberStyles.HexNumber);
+                            int PID = int.Parse(pid, System.Globalization.NumberStyles.HexNumber);
+                            //string GUID = "36fc9e60-c465-11cf-8056-444553540000";
+
+                            PrintToZadigDevice(VID, PID, archivo(itm));
+
+                        }
+                        else { MessageBox.Show("VID y PID no pueden estar vacios, verifique archivo de configuracion"); }
+
+                    }
+                    else {
+
                         RawPrinterHelper.SendStringToPrinter(cmbImpresora.Text, archivo(itm));
 
-                        actualizar_items(itm);
+                    }
+
+                    /////////////////
+
+                    actualizar_items(itm);
 
                     }
             }
@@ -233,6 +282,50 @@ namespace euro_ims_printing
     
         }
 
+        public static void PrintToZadigDevice(int vendorId, int productId, string dataToPrint)
+        {
+            try {
+            UsbDevice MyUsbDevice;
+            UsbDeviceFinder finder = new UsbDeviceFinder(vendorId, productId);
+            MyUsbDevice = UsbDevice.OpenUsbDevice(finder);
+
+            if (MyUsbDevice == null)
+            {
+                Console.WriteLine("No se encontró la impresora.");
+                return;
+            }
+            Console.WriteLine("Exito!, Impresora encontrada.");
+
+
+            // Si es un dispositivo compuesto, bajar a la interface WinUSB
+            IUsbDevice wholeUsb = MyUsbDevice as IUsbDevice;
+            if (wholeUsb != null)
+            {
+                wholeUsb.SetConfiguration(1);
+                wholeUsb.ClaimInterface(0);
+            }
+
+            UsbEndpointWriter writer =
+            MyUsbDevice.OpenEndpointWriter(WriteEndpointID.Ep01); // usualmente 0x01
+
+            byte[] buffer = Encoding.ASCII.GetBytes(dataToPrint);
+
+
+            int transferred;
+            ErrorCode ec = writer.Write(buffer, 2000, out transferred);
+
+
+            if (ec == ErrorCode.None)
+                Console.WriteLine($"Enviado: {transferred} bytes");
+            else
+                Console.WriteLine($"Error: {ec}");
+
+            MyUsbDevice.Close();
+            UsbDevice.Exit();
+
+            }
+            catch (Exception e) { MessageBox.Show("Error en [PrintToZadigDevice]: " + e.Message); }
+        }
         private async void actualizar_items(item itm)
         {
             try { 

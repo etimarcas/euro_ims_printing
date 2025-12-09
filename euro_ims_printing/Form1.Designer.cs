@@ -127,6 +127,8 @@
             // 
             this.cmbImpresora.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbImpresora.FormattingEnabled = true;
+            this.cmbImpresora.Items.AddRange(new object[] {
+            "VID/PID"});
             this.cmbImpresora.Location = new System.Drawing.Point(121, 98);
             this.cmbImpresora.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbImpresora.Name = "cmbImpresora";
@@ -186,12 +188,12 @@
             // 
             this.lblEtimarcas.AutoSize = true;
             this.lblEtimarcas.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEtimarcas.Location = new System.Drawing.Point(15, 582);
+            this.lblEtimarcas.Location = new System.Drawing.Point(2, 582);
             this.lblEtimarcas.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEtimarcas.Name = "lblEtimarcas";
-            this.lblEtimarcas.Size = new System.Drawing.Size(157, 21);
+            this.lblEtimarcas.Size = new System.Drawing.Size(179, 21);
             this.lblEtimarcas.TabIndex = 14;
-            this.lblEtimarcas.Text = "Etimarcas SAS 2025";
+            this.lblEtimarcas.Text = "Etimarcas SAS v1.1125";
             // 
             // label3
             // 

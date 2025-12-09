@@ -20,5 +20,11 @@
     <Setting Name="clave" Type="System.String" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="PID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0272</Value>
+    </Setting>
+    <Setting Name="VID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1203</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
