@@ -51,7 +51,7 @@ namespace euro_ims_printing
             sincronizar_items();
             pgbar.Visible = false;
 
-            timer1.Interval = 5000;
+            timer1.Interval = 60000;
             timer1.Tick += new EventHandler(this.t_sincronizar_items);
             timer1.Enabled = true;
 
@@ -122,7 +122,8 @@ namespace euro_ims_printing
             }
             catch (Exception e) {
                 if (timer1.Enabled) { timer1.Enabled = false; }
-                MessageBox.Show("Error en [sincronizar_items]: "+e.Message);
+                MessageBox.Show("Error en [sincronizar_items]: "+e.Message
+                    );
                 
                 
             }
@@ -284,46 +285,59 @@ namespace euro_ims_printing
 
         public static void PrintToZadigDevice(int vendorId, int productId, string dataToPrint)
         {
-            try {
-            UsbDevice MyUsbDevice;
-            UsbDeviceFinder finder = new UsbDeviceFinder(vendorId, productId);
-            MyUsbDevice = UsbDevice.OpenUsbDevice(finder);
-
-            if (MyUsbDevice == null)
+            try
             {
-                Console.WriteLine("No se encontró la impresora.");
-                return;
-            }
-            Console.WriteLine("Exito!, Impresora encontrada.");
+                UsbDevice MyUsbDevice;
+                UsbDeviceFinder finder = new UsbDeviceFinder(vendorId, productId);
+                MyUsbDevice = UsbDevice.OpenUsbDevice(finder);
+
+                if (MyUsbDevice == null)
+                {
+                    Console.WriteLine("No se encontró la impresora.");
+                    EscribirLog("No se encontró la impresora.");
+                    return;
+                }
+                Console.WriteLine("Exito!, Impresora encontrada.");
 
 
-            // Si es un dispositivo compuesto, bajar a la interface WinUSB
-            IUsbDevice wholeUsb = MyUsbDevice as IUsbDevice;
-            if (wholeUsb != null)
-            {
-                wholeUsb.SetConfiguration(1);
-                wholeUsb.ClaimInterface(0);
-            }
+                // Si es un dispositivo compuesto, bajar a la interface WinUSB
+                IUsbDevice wholeUsb = MyUsbDevice as IUsbDevice;
+                if (wholeUsb != null)
+                {
+                    wholeUsb.SetConfiguration(1);
+                    wholeUsb.ClaimInterface(0);
+                }
 
-            UsbEndpointWriter writer =
-            MyUsbDevice.OpenEndpointWriter(WriteEndpointID.Ep01); // usualmente 0x01
+                UsbEndpointWriter writer =
+                MyUsbDevice.OpenEndpointWriter(WriteEndpointID.Ep01); // usualmente 0x01
 
-            byte[] buffer = Encoding.ASCII.GetBytes(dataToPrint);
-
-
-            int transferred;
-            ErrorCode ec = writer.Write(buffer, 2000, out transferred);
+                byte[] buffer = Encoding.ASCII.GetBytes(dataToPrint);
 
 
-            if (ec == ErrorCode.None)
+                int transferred;
+                ErrorCode ec = writer.Write(buffer, 2000, out transferred);
+
+
+                if (ec == ErrorCode.None) { 
                 Console.WriteLine($"Enviado: {transferred} bytes");
-            else
-                Console.WriteLine($"Error: {ec}");
+                EscribirLog($"Enviado: {transferred} bytes");
 
-            MyUsbDevice.Close();
-            UsbDevice.Exit();
+                }
+
+
+                else {
+
+                    Console.WriteLine($"Error: {ec}");
+                    EscribirLog($"Error: {ec}");
+                }
+
+                MyUsbDevice.Close();
+
+                UsbDevice.Exit();
+
 
             }
+
             catch (Exception e) { MessageBox.Show("Error en [PrintToZadigDevice]: " + e.Message); }
         }
         private async void actualizar_items(item itm)
@@ -398,6 +412,11 @@ namespace euro_ims_printing
             
         }
 
+        private void btnSync_Click(object sender, EventArgs e)
+        {
+            this.sincronizar_items();
+        }
+
         private void ajustar_pantalla(bool ampliar) {
             if (ampliar)
             {
@@ -406,7 +425,7 @@ namespace euro_ims_printing
                 this.Hide();
                 this.Location = new Point(50, 50);
                 this.Size = new System.Drawing.Size(800, 657);
-                dtgv_items.Size = new System.Drawing.Size(763, 287);
+                dtgv_items.Size = new System.Drawing.Size(763, 261);
 
 
                 tbMaquina.Location = new Point(589, 54);
@@ -420,7 +439,8 @@ namespace euro_ims_printing
                 picbSize.Location = new Point(701, 5);
                 picbClose.Location = new Point(742, 5);
 
-                btnImprimir.Location = new Point(665, 505);
+                btnSync.Location = new Point(665, 478);
+                btnImprimir.Location = new Point(665, 522);
                 btnAceptar.Location = new Point(665, 566);
 
                 chkAutoImp.Location = new Point(633, 182);
@@ -448,7 +468,7 @@ namespace euro_ims_printing
                 this.Location = new Point(screenWidth - formWidth, screenHeight - formHeight);
 
 
-                dtgv_items.Size = new System.Drawing.Size(286, 287);
+                dtgv_items.Size = new System.Drawing.Size(295, 261); 
 
                 tbMaquina.Location = new Point(121, 54);
                 cmbImpresora.Location = new Point(121, 98);
@@ -461,8 +481,9 @@ namespace euro_ims_printing
                 picbSize.Location = new Point(225, 5);
                 picbClose.Location = new Point(266, 5);
 
-                btnImprimir.Location = new Point(188, 505);
-                btnAceptar.Location = new Point(189, 566);
+                btnSync.Location = new Point(197, 479);
+                btnImprimir.Location = new Point(197, 522); 
+                btnAceptar.Location = new Point(197, 566); 
 
                 chkAutoImp.Location = new Point(156, 182);
 
@@ -474,6 +495,14 @@ namespace euro_ims_printing
 
 
             }
+        }
+
+
+        public static void EscribirLog(string mensaje)
+        {
+            string rutaLog = "app.log"; // Archivo en la carpeta del ejecutable
+            string formatoMensaje = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - {mensaje}{Environment.NewLine}";
+            File.AppendAllText(rutaLog, formatoMensaje);
         }
     }
 }

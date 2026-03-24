@@ -48,6 +48,7 @@
             this.pgbar = new System.Windows.Forms.ProgressBar();
             this.picbClose = new System.Windows.Forms.PictureBox();
             this.picbSize = new System.Windows.Forms.PictureBox();
+            this.btnSync = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_items)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbClose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbSize)).BeginInit();
@@ -63,7 +64,7 @@
             this.dtgv_items.Location = new System.Drawing.Point(14, 208);
             this.dtgv_items.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtgv_items.Name = "dtgv_items";
-            this.dtgv_items.Size = new System.Drawing.Size(286, 287);
+            this.dtgv_items.Size = new System.Drawing.Size(295, 261);
             this.dtgv_items.TabIndex = 0;
             // 
             // chkPrint
@@ -77,7 +78,7 @@
             // 
             this.btnAceptar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAceptar.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAceptar.Location = new System.Drawing.Point(189, 566);
+            this.btnAceptar.Location = new System.Drawing.Point(197, 566);
             this.btnAceptar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(112, 37);
@@ -90,7 +91,7 @@
             // 
             this.btnImprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnImprimir.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnImprimir.Location = new System.Drawing.Point(188, 505);
+            this.btnImprimir.Location = new System.Drawing.Point(197, 522);
             this.btnImprimir.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnImprimir.Name = "btnImprimir";
             this.btnImprimir.Size = new System.Drawing.Size(112, 37);
@@ -187,11 +188,11 @@
             // lblEtimarcas
             // 
             this.lblEtimarcas.AutoSize = true;
-            this.lblEtimarcas.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEtimarcas.Location = new System.Drawing.Point(2, 582);
+            this.lblEtimarcas.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEtimarcas.Location = new System.Drawing.Point(3, 586);
             this.lblEtimarcas.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEtimarcas.Name = "lblEtimarcas";
-            this.lblEtimarcas.Size = new System.Drawing.Size(179, 21);
+            this.lblEtimarcas.Size = new System.Drawing.Size(144, 17);
             this.lblEtimarcas.TabIndex = 14;
             this.lblEtimarcas.Text = "Etimarcas SAS v1.1125";
             // 
@@ -240,12 +241,26 @@
             this.picbSize.TabStop = false;
             this.picbSize.Click += new System.EventHandler(this.picbSize_Click);
             // 
+            // btnSync
+            // 
+            this.btnSync.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSync.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSync.Location = new System.Drawing.Point(197, 479);
+            this.btnSync.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnSync.Name = "btnSync";
+            this.btnSync.Size = new System.Drawing.Size(112, 37);
+            this.btnSync.TabIndex = 19;
+            this.btnSync.Text = "&Sync";
+            this.btnSync.UseVisualStyleBackColor = true;
+            this.btnSync.Click += new System.EventHandler(this.btnSync_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(323, 657);
+            this.Controls.Add(this.btnSync);
             this.Controls.Add(this.picbClose);
             this.Controls.Add(this.picbSize);
             this.Controls.Add(this.pgbar);
@@ -297,6 +312,7 @@
         private System.Windows.Forms.ProgressBar pgbar;
         private System.Windows.Forms.PictureBox picbSize;
         private System.Windows.Forms.PictureBox picbClose;
+        private System.Windows.Forms.Button btnSync;
     }
 }
 
